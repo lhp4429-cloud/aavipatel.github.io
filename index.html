@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aavi Patel — Finance & Investment Management</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..900,0..100&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f3ede2;
+    --paper-deep: #e8dfcf;
+    --ink: #1a2238;
+    --ink-soft: #2c3654;
+    --rule: #c9bda6;
+    --accent: #b8552e;
+    --accent-soft: #d4a373;
+    --muted: #6b6450;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(circle at 20% 0%, rgba(184, 85, 46, 0.04) 0%, transparent 40%),
+      radial-gradient(circle at 80% 100%, rgba(26, 34, 56, 0.05) 0%, transparent 40%);
+    background-attachment: fixed;
+  }
+
+  /* paper grain overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.05 0 0 0 0.12 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+  }
+
+  .serif { font-family: 'Fraunces', serif; font-variation-settings: 'SOFT' 30; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* ===== TOP BAR ===== */
+  .topbar {
+    position: relative;
+    z-index: 10;
+    border-bottom: 1px solid var(--rule);
+    padding: 14px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .topbar .edition { display: flex; gap: 32px; }
+  .topbar .vol { color: var(--ink); }
+
+  /* ===== MASTHEAD ===== */
+  .masthead {
+    position: relative;
+    z-index: 2;
+    padding: 60px 48px 40px;
+    text-align: center;
+    border-bottom: 3px double var(--ink);
+  }
+
+  .kicker {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 18px;
+  }
+
+  .nameplate {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(64px, 13vw, 180px);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    font-variation-settings: 'SOFT' 50, 'opsz' 144;
+  }
+
+  .nameplate .ampersand {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+    font-variation-settings: 'SOFT' 100;
+  }
+
+  .tagline {
+    margin-top: 24px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: clamp(16px, 2vw, 22px);
+    color: var(--ink-soft);
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 300;
+  }
+
+  /* ===== CONTACT STRIP ===== */
+  .contact-strip {
+    position: relative;
+    z-index: 2;
+    padding: 18px 48px;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  .contact-strip a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: all 0.3s ease;
+  }
+
+  .contact-strip a:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  .contact-strip .label {
+    color: var(--accent);
+    margin-right: 8px;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* ===== MAIN CONTAINER ===== */
+  .container {
+    position: relative;
+    z-index: 2;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 64px 48px;
+  }
+
+  /* ===== SECTION HEADERS ===== */
+  .section {
+    margin-bottom: 80px;
+    position: relative;
+  }
+
+  .section-head {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 32px;
+    align-items: baseline;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(28px, 4vw, 42px);
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    font-variation-settings: 'SOFT' 40;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 300;
+  }
+
+  /* ===== PROFILE SECTION ===== */
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .profile-meta {
+    border-left: 2px solid var(--accent);
+    padding-left: 24px;
+  }
+
+  .profile-meta dt {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+
+  .profile-meta dd {
+    font-family: 'Fraunces', serif;
+    font-size: 17px;
+    margin-bottom: 20px;
+    color: var(--ink);
+  }
+
+  .profile-text {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    font-weight: 300;
+    font-variation-settings: 'SOFT' 30;
+  }
+
+  .profile-text .drop-cap {
+    float: left;
+    font-size: 84px;
+    line-height: 0.85;
+    padding: 6px 12px 0 0;
+    color: var(--accent);
+    font-weight: 400;
+    font-variation-settings: 'SOFT' 80;
+  }
+
+  /* ===== EDUCATION ===== */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+
+  .edu-card {
+    border-top: 1px solid var(--ink);
+    padding-top: 24px;
+    position: relative;
+  }
+
+  .edu-card::before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: 0;
+    width: 60px;
+    height: 5px;
+    background: var(--accent);
+  }
+
+  .edu-degree {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+
+  .edu-school {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+  }
+
+  .edu-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .edu-coursework {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+
+  .edu-coursework strong {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  /* ===== EXPERIENCE & PROJECTS — TIMELINE STYLE ===== */
+  .entry {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--rule);
+    transition: background 0.4s ease;
+  }
+
+  .entry:hover {
+    background: rgba(184, 85, 46, 0.03);
+  }
+
+  .entry:last-child { border-bottom: none; }
+
+  .entry-date {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-top: 6px;
+  }
+
+  .entry-title {
+    font-family: 'Fraunces', serif;
+    font-size: 26px;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .entry-org {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+
+  .entry-org::before {
+    content: "— ";
+    color: var(--accent);
+  }
+
+  .entry-bullets {
+    list-style: none;
+  }
+
+  .entry-bullets li {
+    padding-left: 28px;
+    position: relative;
+    margin-bottom: 10px;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+
+  .entry-bullets li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+  }
+
+  .entry-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding: 3px 10px;
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    margin-bottom: 12px;
+    background: rgba(184, 85, 46, 0.05);
+  }
+
+  /* ===== SKILLS GRID ===== */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+  }
+
+  .skill-block {
+    border-top: 2px solid var(--ink);
+    padding-top: 18px;
+  }
+
+  .skill-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 0;
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  .skill-list span {
+    position: relative;
+  }
+
+  .skill-list span:not(:last-child)::after {
+    content: " · ";
+    color: var(--accent);
+    margin: 0 6px;
+  }
+
+  /* ===== CERTIFICATIONS — TICKER STYLE ===== */
+  .cert-section {
+    background: var(--ink);
+    color: var(--paper);
+    margin: 0 -48px;
+    padding: 64px 48px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cert-section .section-head {
+    border-bottom-color: rgba(243, 237, 226, 0.2);
+  }
+
+  .cert-section .section-num { color: var(--accent-soft); }
+
+  .cert-section .section-title { color: var(--paper); }
+
+  .cert-section .section-title em { color: var(--accent-soft); }
+
+  .cert-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+  }
+
+  .cert-group h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--accent-soft);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(243, 237, 226, 0.2);
+  }
+
+  .cert-list {
+    list-style: none;
+  }
+
+  .cert-list li {
+    font-family: 'Fraunces', serif;
+    font-size: 18px;
+    padding: 10px 0;
+    border-bottom: 1px dotted rgba(243, 237, 226, 0.15);
+    color: var(--paper);
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+  }
+
+  .cert-list li::before {
+    content: "◆";
+    color: var(--accent-soft);
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 48px;
+    border-top: 3px double var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .footer-mark {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 24px;
+    color: var(--ink);
+    margin-bottom: 12px;
+    letter-spacing: 0;
+    text-transform: none;
+    font-weight: 300;
+  }
+
+  /* ===== ANIMATIONS ===== */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .nameplate, .tagline, .kicker {
+    animation: rise 1s ease-out backwards;
+  }
+
+  .kicker { animation-delay: 0.1s; }
+  .nameplate { animation-delay: 0.25s; }
+  .tagline { animation-delay: 0.55s; }
+
+  .section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .topbar { padding: 12px 24px; font-size: 10px; }
+    .topbar .edition { gap: 18px; }
+    .masthead { padding: 40px 24px 30px; }
+    .contact-strip { padding: 16px 24px; gap: 24px; }
+    .container { padding: 48px 24px; }
+    .section { margin-bottom: 56px; }
+    .section-head { grid-template-columns: 60px 1fr; gap: 16px; }
+    .profile-grid { grid-template-columns: 1fr; gap: 32px; }
+    .profile-text { font-size: 18px; }
+    .edu-grid { grid-template-columns: 1fr; gap: 32px; }
+    .entry { grid-template-columns: 1fr; gap: 12px; padding: 24px 0; }
+    .skills-grid { grid-template-columns: 1fr; gap: 32px; }
+    .cert-section { margin: 0 -24px; padding: 48px 24px; }
+    .cert-grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Top bar — newspaper masthead style -->
+<div class="topbar">
+  <div class="edition">
+    <span class="vol">VOL. I · NO. 01</span>
+    <span>EST. 2024</span>
+  </div>
+  <div>FAIRFIELD · CONNECTICUT</div>
+</div>
+
+<!-- Masthead -->
+<header class="masthead">
+  <div class="kicker">Curriculum Vitae</div>
+  <h1 class="nameplate">Aavi Patel</h1>
+  <p class="tagline">Finance &amp; Investment Management — building disciplined portfolios at the intersection of quantitative rigor and market intuition.</p>
+</header>
+
+<!-- Contact strip -->
+<div class="contact-strip">
+  <div><span class="label">Tel</span><a href="tel:+12033901425">(203) 390-1425</a></div>
+  <div><span class="label">Mail</span><a href="mailto:aavipatel9942@gmail.com">aavipatel9942@gmail.com</a></div>
+  <div><span class="label">Web</span><a href="#">LinkedIn</a></div>
+</div>
+
+<main class="container">
+
+  <!-- Profile -->
+  <section class="section" id="profile">
+    <div class="section-head">
+      <div class="section-num">§ 01</div>
+      <h2 class="section-title">The <em>profile</em></h2>
+    </div>
+    <div class="profile-grid">
+      <dl class="profile-meta">
+        <dt>Discipline</dt>
+        <dd>Finance &amp; Investment</dd>
+        <dt>Specialization</dt>
+        <dd>Portfolio Optimization · Risk · Algorithmic Trading</dd>
+        <dt>Status</dt>
+        <dd>Open to opportunities</dd>
+        <dt>Languages</dt>
+        <dd>English · Hindi · Gujarati</dd>
+      </dl>
+      <p class="profile-text">
+        <span class="drop-cap">A</span>
+        Master's student in Finance &amp; Investment Management at Sacred Heart University with hands-on experience in financial analysis, risk management, blockchain simulation, and portfolio optimization — paired with applied work in market research and trading simulations.
+      </p>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section class="section" id="education">
+    <div class="section-head">
+      <div class="section-num">§ 02</div>
+      <h2 class="section-title">In the matter of <em>education</em></h2>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-degree">M.S. Finance &amp; Investment Management</div>
+        <div class="edu-school">Sacred Heart University, Fairfield CT</div>
+        <div class="edu-date">Sep 2024 — Dec 2025</div>
+        <div class="edu-coursework">
+          <strong>Coursework</strong>
+          Financial Analysis &amp; Firm Valuation · Advanced Investment Management · Fixed Income Securities &amp; Markets · Advanced Derivatives · Risk Management · Quantitative Finance · Algorithmic Trading Strategies
+        </div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-degree">Bachelor of Commerce</div>
+        <div class="edu-school">Maharaja Sayajirao University, Vadodara</div>
+        <div class="edu-date">Jul 2021 — Jul 2024</div>
+        <div class="edu-coursework">
+          <strong>Coursework</strong>
+          Security Analysis &amp; Portfolio Management · Corporate Accounting · Cost Accounting
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section class="section" id="experience">
+    <div class="section-head">
+      <div class="section-num">§ 03</div>
+      <h2 class="section-title">Professional <em>experience</em></h2>
+    </div>
+
+    <article class="entry">
+      <div class="entry-date">Sep 2025 — Dec 2025</div>
+      <div>
+        <h3 class="entry-title">Graduate Assistant</h3>
+        <div class="entry-org">Sacred Heart University, Fairfield CT</div>
+        <ul class="entry-bullets">
+          <li>Supported departmental operations including asset creation, document archiving and administrative support to the Department Chair and Assistant.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="entry-date">Jun 2024 — Jul 2024</div>
+      <div>
+        <h3 class="entry-title">Finance Intern</h3>
+        <div class="entry-org">Metatech Training Spray Pvt. Ltd.</div>
+        <ul class="entry-bullets">
+          <li>Prepared CMA reports and statutory filings for compliance documentation.</li>
+          <li>Supported financial planning discussions and company structuring projects.</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <!-- Projects -->
+  <section class="section" id="projects">
+    <div class="section-head">
+      <div class="section-num">§ 04</div>
+      <h2 class="section-title">Selected <em>projects</em></h2>
+    </div>
+
+    <article class="entry">
+      <div class="entry-date">Sacred Heart University</div>
+      <div>
+        <span class="entry-tag">Portfolio Mgmt · Valuation</span>
+        <h3 class="entry-title">Student Management Investment Fund</h3>
+        <div class="entry-org">Portfolio Management &amp; Financial Analysis</div>
+        <ul class="entry-bullets">
+          <li>Built diversified and concentrated portfolios using Excel Solver and Bloomberg; analyzed efficient frontiers and risk-adjusted returns.</li>
+          <li>Performed tracking-error analysis, allocation optimization, and visualization for portfolio decisions.</li>
+          <li>Conducted valuation of five industry firms — CAPM β/α computation, liquidity analysis, and 5-year financial statement projections.</li>
+          <li>Modeled WACC, enterprise value, and sensitivity scenarios including COVID-19 impact.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="entry-date">Finance Club</div>
+      <div>
+        <span class="entry-tag">Python · Blockchain</span>
+        <h3 class="entry-title">Blockchain-Backed Portfolio Simulation</h3>
+        <div class="entry-org">Multi-asset verification &amp; ledger design</div>
+        <ul class="entry-bullets">
+          <li>Developed a Python blockchain ledger to validate portfolio transactions and verify performance across multi-asset allocations.</li>
+          <li>Evaluated equal-weighted vs optimized portfolios using risk, return, and hashing-based verification.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="entry-date">Coursework</div>
+      <div>
+        <span class="entry-tag">Optimization · Multi-Asset</span>
+        <h3 class="entry-title">Portfolio Optimization &amp; Investment Opportunity Set</h3>
+        <div class="entry-org">Efficient frontiers across equities, commodities &amp; digital assets</div>
+        <ul class="entry-bullets">
+          <li>Modeled portfolios using equities, commodities, and digital assets.</li>
+          <li>Constructed efficient frontiers and IOS; optimized allocations for multi-asset portfolios to identify target returns.</li>
+          <li>Applied rebalancing and correlation analysis to enhance portfolio stability and Sharpe ratios.</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="entry-date">Coursework</div>
+      <div>
+        <span class="entry-tag">Python · Algo Trading</span>
+        <h3 class="entry-title">Algorithmic Trading Simulation</h3>
+        <div class="entry-org">Momentum strategy with Keltner Channels &amp; MACD</div>
+        <ul class="entry-bullets">
+          <li>Implemented a momentum strategy in Python using Keltner Channels &amp; MACD; achieved ~15% annualized return over 5 years.</li>
+          <li>Improved execution logic versus moving-average benchmarks.</li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <!-- Skills -->
+  <section class="section" id="skills">
+    <div class="section-head">
+      <div class="section-num">§ 05</div>
+      <h2 class="section-title">Skills <em>&amp;</em> interests</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-block">
+        <div class="skill-label">Technical</div>
+        <div class="skill-list">
+          <span>Financial &amp; Data Analysis</span>
+          <span>Risk Management</span>
+          <span>Fixed Income Valuation</span>
+          <span>Algorithmic Trading</span>
+          <span>Bloomberg Terminal</span>
+          <span>Python</span>
+          <span>Excel (VBA, Solver)</span>
+          <span>Tableau</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-label">Soft Skills</div>
+        <div class="skill-list">
+          <span>Analytical Thinking</span>
+          <span>Quantitative Problem-Solving</span>
+          <span>Cross-Functional Collaboration</span>
+          <span>Strategic Negotiation</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-label">Languages</div>
+        <div class="skill-list">
+          <span>English</span>
+          <span>Hindi</span>
+          <span>Gujarati</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- Certifications — dark inset -->
+<section class="cert-section section" id="certifications">
+  <div style="max-width: 1240px; margin: 0 auto;">
+    <div class="section-head">
+      <div class="section-num">§ 06</div>
+      <h2 class="section-title">Certifications <em>&amp; programs</em></h2>
+    </div>
+    <div class="cert-grid">
+      <div class="cert-group">
+        <h4>Bloomberg</h4>
+        <ul class="cert-list">
+          <li>Bloomberg Finance Fundamentals</li>
+          <li>Bloomberg Market Concepts</li>
+          <li>Bloomberg ESG</li>
+          <li>Bloomberg Spreadsheet Analysis</li>
+        </ul>
+      </div>
+      <div class="cert-group">
+        <h4>Forage Virtual Experience</h4>
+        <ul class="cert-list">
+          <li>PGIM Fixed Income Job Simulation</li>
+          <li>Citi Global Markets Sales &amp; Trading</li>
+          <li>JPMorgan Chase Investment Banking</li>
+          <li>Goldman Sachs Investment Banking</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-mark">Aavi Patel</div>
+  <div>— End of curriculum vitae —</div>
+</footer>
+
+<script>
+  // Reveal sections on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.section').forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
